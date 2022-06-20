@@ -6,10 +6,6 @@ const AddService = () => {
         register,
         handleSubmit,
         reset,
-        clearErrors,
-        resetField,
-        setError,
-        setFocus,
         formState: { errors },
     } = useForm();
 
