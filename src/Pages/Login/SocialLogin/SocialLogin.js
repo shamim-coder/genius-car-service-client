@@ -6,11 +6,13 @@ import { useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/a
 import auth from "../../../firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../../Shared/Loading/Loading";
+import useToken from "../../../Hooks/useToken";
 const axios = require("axios").default;
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
+    const { token } = useToken(user || user1);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -30,23 +32,10 @@ const SocialLogin = () => {
         );
     }
 
-    const handleGooglSignIn = async () => {
-        await signInWithGoogle();
-
-        const { data } = await axios.post("https://infinite-peak-68633.herokuapp.com/getToken", {});
-        // localStorage.setItem("accessToken", data.accessToken);
-        console.log(data);
+    if (token) {
         navigate(from, { replace: true });
-    };
+    }
 
-    const handleGithubSignIn = async () => {
-        await signInWithGithub();
-
-        const { data } = await axios.post("https://infinite-peak-68633.herokuapp.com/getToken", {});
-        // localStorage.setItem("accessToken", data.accessToken);
-        console.log(data);
-        navigate(from, { replace: true });
-    };
     return (
         <div>
             <div className="d-flex align-items-center">
@@ -56,7 +45,7 @@ const SocialLogin = () => {
             </div>
             {errorElement}
             <div className="">
-                <button onClick={() => handleGooglSignIn()} className="btn btn-info w-50 d-block mx-auto my-2">
+                <button onClick={() => signInWithGoogle()} className="btn btn-info w-50 d-block mx-auto my-2">
                     <img style={{ width: "30px" }} src={google} alt="" />
                     <span className="px-2">Google Sign In</span>
                 </button>
@@ -64,7 +53,7 @@ const SocialLogin = () => {
                     <img style={{ width: "30px" }} src={facebook} alt="" />
                     <span className="px-2">Facebook Sign In</span>
                 </button>
-                <button onClick={() => handleGithubSignIn()} className="btn btn-info w-50 d-block mx-auto">
+                <button onClick={() => signInWithGithub()} className="btn btn-info w-50 d-block mx-auto">
                     <img style={{ width: "30px" }} src={github} alt="" />
                     <span className="px-2">Github Sign In</span>
                 </button>
