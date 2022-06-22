@@ -1,0 +1,6 @@
+.loading-spinner {
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

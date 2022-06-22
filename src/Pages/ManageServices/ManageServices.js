@@ -1,8 +1,10 @@
 import React from "react";
 import useServices from "../../Hooks/useServices";
+import Loading from "../Shared/Loading/Loading";
+import "./ManageServices.css";
 
 const ManageServices = () => {
-    const [services, setServices] = useServices();
+    const { services, setServices, loading } = useServices();
 
     const handleDeleteService = (id) => {
         const url = `https://infinite-peak-68633.herokuapp.com/deleteService/${id}`;
@@ -37,21 +39,25 @@ const ManageServices = () => {
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {services.map((service, index) => {
-                            return (
-                                <tr>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{service.name}</td>
-                                    <td>{service.price}</td>
-                                    <td>{service.description.slice(0, 50)}...</td>
-                                    <td>
-                                        <button onClick={() => handleDeleteService(service._id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
+                    {loading ? (
+                        <Loading />
+                    ) : (
+                        <tbody>
+                            {services.map((service, index) => {
+                                return (
+                                    <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{service.name}</td>
+                                        <td>{service.price}</td>
+                                        <td>{service.description.slice(0, 50)}...</td>
+                                        <td>
+                                            <button onClick={() => handleDeleteService(service._id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    )}
                 </table>
             </div>
         </div>

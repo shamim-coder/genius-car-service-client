@@ -11,6 +11,7 @@ const useOrders = () => {
     const [user] = useAuthState(auth);
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getOrders = async () => {
@@ -18,6 +19,10 @@ const useOrders = () => {
                 const { data } = await axiosPrivate.get(`https://infinite-peak-68633.herokuapp.com/orders?email=${user?.email}`);
 
                 setOrders(data);
+
+                if (data) {
+                    setLoading(false);
+                }
             } catch (error) {
                 console.log(error.message);
                 if (error.response.status === 401 || error.response.status === 403) {
@@ -28,7 +33,7 @@ const useOrders = () => {
         };
         getOrders();
     }, [navigate, user]);
-    return { orders, setOrders };
+    return { orders, setOrders, loading };
 };
 
 export default useOrders;

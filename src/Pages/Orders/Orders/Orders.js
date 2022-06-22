@@ -1,13 +1,20 @@
 import React from "react";
 import useOrders from "../../../Hooks/useOrders";
+import Loading from "../../Shared/Loading/Loading";
 
 const Orders = () => {
-    const { orders } = useOrders();
+    const { orders, loading } = useOrders();
 
     return (
         <div>
-            <h1>Manage Orders</h1>
-            <h4>Orders : {orders.length}</h4>
+            {loading ? (
+                <Loading />
+            ) : (
+                <>
+                    <h1>Manage Orders</h1>
+                    <h4>Orders : {orders.length}</h4>
+                </>
+            )}
         </div>
     );
 };
