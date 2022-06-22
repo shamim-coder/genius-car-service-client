@@ -5,7 +5,7 @@ const ManageServices = () => {
     const [services, setServices] = useServices();
 
     const handleDeleteService = (id) => {
-        const url = `http://localhost:5000/deleteService/${id}`;
+        const url = `https://infinite-peak-68633.herokuapp.com/deleteService/${id}`;
 
         const remaining = services.filter((service) => service._id !== id);
 
