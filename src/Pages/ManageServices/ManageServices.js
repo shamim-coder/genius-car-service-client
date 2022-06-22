@@ -29,7 +29,7 @@ const ManageServices = () => {
         <div className="container my-5">
             <h1 className="text-center">Manage Services</h1>
             <div className="table-responsive">
-                <table class="table">
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -45,7 +45,7 @@ const ManageServices = () => {
                         <tbody>
                             {services.map((service, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={service._id}>
                                         <th scope="row">{index + 1}</th>
                                         <td>{service.name}</td>
                                         <td>{service.price}</td>
